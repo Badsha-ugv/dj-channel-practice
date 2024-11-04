@@ -10,17 +10,27 @@
     <h2>Django Channel Practice Project</h2>
 
 
-    <textarea name="" id="chat-log" rows="20" cols="60"></textarea> <br>
+    <textarea name="" id="chat-log" rows="20" cols="60">
+        {% for message in messages %}
+            {{ message.content }}
+        {% endfor %}
+
+    </textarea> <br>
     <input type="text" name="" id="chat-msg"> <br> <br>
     <input type="submit" value="send" id="submit-btn">
 
+    {{ group_name}}
+    {{ group_name|json_script:'groupName'}}
+
     <script>
+
+        const groupName = JSON.parse(document.getElementById('groupName').textContent)
+        console.log("groupName: ", groupName);
         // Connect to the Django Channels WebSocket endpoint
-        var client = new WebSocket("ws://localhost:8000/ws/chat/");
+        var client = new WebSocket("ws://" + window.location.host + "/ws/chat/" + groupName + "/");
 
         client.onopen = function(){
             console.log("Connected to WebSocket");  
-            client.send('I am from Client Side')
 
         }
         
