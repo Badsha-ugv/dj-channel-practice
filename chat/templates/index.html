@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Channel</title>
+</head>
+<body>
+
+    <h2>Django Channel Practice Project</h2>
+
+
+    <textarea name="" id="chat-log" rows="20" cols="60"></textarea> <br>
+    <input type="text" name="" id="chat-msg"> <br> <br>
+    <input type="submit" value="send" id="submit-btn">
+
+    <script>
+        // Connect to the Django Channels WebSocket endpoint
+        var client = new WebSocket("ws://localhost:8000/ws/chat/");
+
+        client.onopen = function(){
+            console.log("Connected to WebSocket");  
+            client.send('I am from Client Side')
+
+        }
+        
+        client.onmessage = function(event){
+            console.log("Received message from server :", event.data);
+            var data = JSON.parse(event.data);
+            document.getElementById('chat-log').value += data + '\n';  // append the received message to the textarea
+        }
+
+        client.onclose = function(event){
+            console.log("WebSocket closed", event);
+        }
+
+        //  dom 
+        document.getElementById('submit-btn').onclick = function(event){
+            var message = document.getElementById('chat-msg').value;
+            console.log("Message ", message);
+            client.send(JSON.stringify(message));
+            document.getElementById('chat-msg').value = '';
+        }
+    </script>
+    
+</body>
+</html>
