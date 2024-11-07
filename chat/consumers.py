@@ -24,6 +24,9 @@ class MySyncConsumer(SyncConsumer):
         print("Received event", event['text'])
 
         group = Group.objects.get(name=self.group_name)
+
+        user = self.scope['user']
+        print('user', user)
         chat_data = json.loads(event['text'])
         chat = Message(
             group=group,
