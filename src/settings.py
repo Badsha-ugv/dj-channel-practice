@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-$1_o9+zrkz50)ffr-o%fu8#0zj3-x(r(2t2(i^i&c1&127x0ox
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -135,3 +135,6 @@ CHANNEL_LAYERS = {
         # },
     # },
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000','https://dj-channel-practice.onrender.com']
