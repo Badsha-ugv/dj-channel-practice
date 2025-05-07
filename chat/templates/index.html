@@ -27,7 +27,8 @@
         const groupName = JSON.parse(document.getElementById('groupName').textContent)
         console.log("groupName: ", groupName);
         // Connect to the Django Channels WebSocket endpoint
-        var client = new WebSocket("ws://" + window.location.host + "/ws/chat/" + groupName + "/");
+        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        var client = new WebSocket(protocol + '://' + window.location.host + "/ws/chat/" + groupName + "/");
 
         client.onopen = function(){
             console.log("Connected to WebSocket");  
